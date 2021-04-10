@@ -4,7 +4,8 @@ import { DATABASE_NAME } from '../database/config';
 
 async function excute() {
   try {
-    await migrationRunner(DATABASE_NAME); // 예시 5번
+    const count = await migrationRunner(DATABASE_NAME); // 예시 5번
+    return count;
   } catch (err) {
     throw new Error(err);
   }
