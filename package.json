@@ -1,0 +1,24 @@
+{
+  "name": "migration",
+  "version": "0.0.1",
+  "description": "Line games test",
+  "main": "index.ts",
+  "author": "public.winverse@gmail.com",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "prod:generate": "NODE_ENV=production node ./dist/scripts/generate.js",
+    "prod:excute": "NODE_ENV=production node ./dist/scripts/excute.js",
+    "dev:generate": "ts-node-dev ./scripts/generate.ts",
+    "dev:excute": "ts-node-dev ./scripts/excute.ts"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.18",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
