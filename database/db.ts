@@ -16,9 +16,6 @@ const parseJSON =  JSON.parse(json);
 export const DATABASE_NAME = process.argv[2] || parseJSON.database;
 export const META_TABLE_NAME = `meta`;
 
-console.log('name', DATABASE_NAME);
-console.log('meta', META_TABLE_NAME);
-
 const config: ConnectionConfig = { ...parseJSON };
 
 const db: Connection = mysql.createConnection(config);
