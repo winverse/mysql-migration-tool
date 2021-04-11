@@ -10,3 +10,5 @@ config/config.json
 # DB Migration history
 database/migration/*
 database/schema/*
+
+yarn.lock
