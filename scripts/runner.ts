@@ -1,13 +1,14 @@
 import MigrationRunner from '../database/migration-runner';
 import { META_TABLE_NAME } from '../database/db';
-import cliPrompt from '../lib/cli-prompt';
 
 async function runner() {
   let DATABASE_NAME: string = ''
   if (process.argv[2]) {
     DATABASE_NAME = process.argv[2];
-  } else {
-    DATABASE_NAME = await cliPrompt('Please write down the name of the DB to be applied: ');
+  }
+
+  if (!DATABASE_NAME) {
+    throw new Error('Migration runner needs Database name');
   }
 
   try {

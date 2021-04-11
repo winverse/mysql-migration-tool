@@ -24,7 +24,7 @@ async function generator () {
 
 generator().then((isDiff) => {
   if (isDiff) {
-    console.info(`[SUCCESS] Create new schema and migration files! 🎉`);
+    console.info(`[SUCCESS] Create new schema and migration files from dbName: ${DATABASE_NAME} 🎉`);
   } else {
     console.warn('[FAIL] There was no difference... 🤔');
   }
