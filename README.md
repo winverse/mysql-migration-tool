@@ -19,7 +19,7 @@
 
   - `dev:generator`: 개발 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
   
-  - `dev:runner <DBName>`: 개발 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 cli-prompt로 입력화면이 뜨게 됩니다.
+  - `dev:runner <DBName>`: 개발 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 에러가 발생합니다.
 
   - `build`: typescript compile command
   - `prod:generator`: 프로덕트 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
