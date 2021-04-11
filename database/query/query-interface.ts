@@ -13,34 +13,33 @@ export async function dropTable (tableName: string) {
   return data;
 }
 
-export async function createTable (name: string, present: SchemaDetail[]): Promise<DiffData> {
-  const tableInfo = present.find((table) => table.tableName === name);
-  if (!tableInfo) {
-    throw new Error('Not found table info');
-  }
+export async function createTable (tableName: string, tableInfo: SchemaDetail): Promise<DiffData> {
+  let query = `CREATE TABLE IF NOT EXISTS \`DATABASE-NAME\`.\`${tableName}\` (\n`;
 
-  let query = `CREATE TABLE IF NOT EXISTS \`DATABASE-NAME\`.\`${name}\` (\n`;
-
-  tableInfo.columns.map((column) => {
-    const { Field, Type, Null, Extra, Default, Key } = column;
+  tableInfo.columns.forEach((column) => {
+    const { Field, Type, Null, Extra, Default } = column;
     query += `  \`${Field}\` ${Type.toUpperCase()} ${Null === 'NO' ? 'NOT NULL' : 'NULL'}${Default ? ` DEFAULT ${Default}` : ''}${Extra ? ' AUTO_INCREMENT' : ''},\n`;
-    if (Key) {
-      return Field;
-    }
   })
 
-  const primaryKey = tableInfo.columns.find((column) => column.Key);
+  const primaryKey = tableInfo.columns.find((column) => column.Key === 'PRI');
+  const uniKey = tableInfo.columns.find((column) => column.Key === 'UNI');
 
   if (primaryKey) {
-    query += `  PRIMARY KEY(\`${primaryKey.Field}\`)\n`;
+    query += `PRIMARY KEY(\`${primaryKey.Field}\`)`;
   }
+
+  if (uniKey) {
+    query += `${primaryKey ? ',' : ''}   UNIQUE KEY \`unique_item_name\` (\`${uniKey.Field}\`)`;
+  }
+
+  query += '\n';
   query += ')';
 
   const data = {
-    targetTable: name,
+    targetTable: tableName,
     type: 'createTable',
     query, 
-    ddl: await getDDL(name)
+    ddl: await getDDL(tableName)
   };
   return data
 }
@@ -75,8 +74,9 @@ export async function removeColumn(tableName: string, columnName: string): Promi
 
 export async function changeColumn(tableName: string, column: ColumnDetail): Promise<DiffData> {
   const { Field, Type, Null, Extra, Default, Key } = column;
-  const query = `ALTER TABLE \`DATABASE-NAME\`.\`${tableName}\` MODIFY \`${Field}\` ${Type.toUpperCase()} ${Null === 'NO' ? 'NOT NULL' : 'NULL'}${Default ? ` DEFAULT ${Default}` : ''}${Extra ? ' AUTO_INCREMENT' : ''},
-    ${Key === 'PRI' ? `ADD PRIMARY KEY(\`${Field}\`);` : Key === 'UNI' ? `ADD UNIQUE INDEX \`unique_index_name\` (\`${Field}\`)` : ''}
+
+  const query = `ALTER TABLE \`DATABASE-NAME\`.\`${tableName}\` MODIFY \`${Field}\` ${Type.toUpperCase()} ${Null === 'NO' ? 'NOT NULL' : 'NULL'}${Default ? ` DEFAULT ${Default}` : ''}${Extra ? ' AUTO_INCREMENT' : ''}
+    ${Key === 'PRI' ? `, ADD PRIMARY KEY(\`${Field}\`);` : Key === 'UNI' ? `, ADD UNIQUE INDEX \`unique_index_name\` (\`${Field}\`)` : ''}
   ;`;
 
   const data = {

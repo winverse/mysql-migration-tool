@@ -27,7 +27,7 @@ class MigrationRunner {
             (name) VALUE ('${filename}');
           `;
           await customQuery(query);
-          console.log(`[SUCCESS] filename: '${filename}' was recored`);
+          console.log(`filename: '${filename}' was recored`);
         }));
       } catch (err) {
         throw new Error(err);

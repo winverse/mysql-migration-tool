@@ -1,5 +1,25 @@
-import mysql, { Connection } from 'mysql';
-import config, { DATABASE_NAME, META_TABLE_NAME } from './config';
+import fs from 'fs';
+import mysql, { Connection, ConnectionConfig } from 'mysql';
+import configDir from '../lib/config-dir';
+import writeConfig from '../lib/write-config';
+
+const configPath = `${configDir()}/config.json`;
+
+if (!fs.existsSync(configPath)) {
+  writeConfig();
+}
+
+const json = fs.readFileSync(`${configDir()}/config.json`, 'utf8');
+
+const parseJSON =  JSON.parse(json);
+
+export const DATABASE_NAME = process.argv[2] || parseJSON.database;
+export const META_TABLE_NAME = `meta`;
+
+console.log('name', DATABASE_NAME);
+console.log('meta', META_TABLE_NAME);
+
+const config: ConnectionConfig = { ...parseJSON };
 
 const db: Connection = mysql.createConnection(config);
 

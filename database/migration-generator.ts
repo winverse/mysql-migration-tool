@@ -68,7 +68,7 @@ class MigrationGenerator {
     const context = this.createMigrationContext(diff);
     fs.writeFileSync(`${migrationDirPath}/${filename}${ext}`, context, 'utf8');
   }
-  
+
   private async migrateRecord (filename: string) {
     try {
       const query = `INSERT INTO \`${this.databaseName}\`.\`${this.metaTableName}\` 
@@ -82,20 +82,20 @@ class MigrationGenerator {
 
   public async schemaTracker(): Promise<{ filename: string; isDiff: boolean }> {
     const tableNames = await this.getTableNames();
-    const findedSchema = await Promise.all(tableNames.map(this.getTableSchema));
+    const presentSchema = await Promise.all(tableNames.map(this.getTableSchema));
     const filename = `${timestamp()}`
     const lastSchemaData = this.getLastSchemaData();
 
     let isDiff = true;
     if (!lastSchemaData) {
       // 초기화
-      const diff = await findDiff([], findedSchema);
-      this.writeFiles(diff, findedSchema, filename);
+      const diff = await findDiff([], presentSchema);
+      this.writeFiles(diff, presentSchema, filename);
     } else {
-      const diff = await findDiff(lastSchemaData, findedSchema);
+      const diff = await findDiff(lastSchemaData, presentSchema);
       // 이전 내용과 비교해 다를경우에만 새로 생성
       if (diff.length > 0) {
-        this.writeFiles(diff, findedSchema, filename);
+        this.writeFiles(diff, presentSchema, filename);
       } else {
         isDiff = false;
       }

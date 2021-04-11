@@ -5,12 +5,16 @@
   "author": "public.winverse@gmail.com",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": ">=14.15.0"
+  },
   "scripts": {
     "build": "tsc",
     "prod:generator": "NODE_ENV=production node ./dist/scripts/generator.js",
     "prod:runner": "NODE_ENV=production node ./dist/scripts/runner.js",
     "dev:generator": "ts-node-dev ./scripts/generator.ts",
-    "dev:runner": "ts-node-dev ./scripts/runner.ts"
+    "dev:runner": "ts-node-dev ./scripts/runner.ts",
+    "reset": "rm -rf ./database/schema/*.json && rm -rf ./database/migration/*.ts && rm -rf ./dist"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.18",

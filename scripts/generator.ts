@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { DATABASE_NAME, META_TABLE_NAME } from '../database/config';
+import { DATABASE_NAME, META_TABLE_NAME } from '../database/db';
 import schemaTracker from '../database/migration-generator';
+
 
 // 마이그레이션 파일 생성
 async function generator () {

@@ -6,20 +6,26 @@ import { addColumn, changeColumn, createTable, dropTable, removeColumn } from '.
 async function findDiff (last:SchemaDetail[], present:SchemaDetail[]): Promise<DiffData[]>{
   const result: DiffData[] = [];
 
-  const lastTables = last.map((table) => table.tableName); 
-  const presentTables = present.map((table) => table.tableName); 
+  const lastTablesNames = last.map((table) => table.tableName); 
+  const presentTablesNames = present.map((table) => table.tableName); 
 
   // dropTable
-  await Promise.all(lastTables.map(async(lastTable) => {
-    if (!presentTables.includes(lastTable)) {
-      await dropTable(lastTable).then((data) => result.push(data));
+  await Promise.all(lastTablesNames.map(async(tableName) => {
+    if (!presentTablesNames.includes(tableName)) {
+      await dropTable(tableName).then((data) => result.push(data));
     }
   }))
 
   // createTable
-  await Promise.all(presentTables.map(async(presentTable) => {
-    if (!lastTables.includes(presentTable)) {
-      await createTable(presentTable, present).then((data) => result.push(data));
+  await Promise.all(presentTablesNames.map(async(tableName) => {
+    if (!lastTablesNames.includes(tableName)) {
+      const tableInfo = present.find((table) => table.tableName === tableName);
+      
+      if (!tableInfo) {
+        throw new Error('Not found table info');
+      }
+
+      await createTable(tableName, tableInfo).then((data) => result.push(data));
     }
   }))
   
@@ -48,6 +54,7 @@ async function findDiff (last:SchemaDetail[], present:SchemaDetail[]): Promise<D
 
       // changeColumn
       const presentTableColumn = getColumnInfo(field, 'present');
+
       const lastTableColumn = getColumnInfo(field, 'last');
 
       if (!presentTableColumn || ! lastTableColumn) {
@@ -74,7 +81,6 @@ async function findDiff (last:SchemaDetail[], present:SchemaDetail[]): Promise<D
           throw new Error(`Not exists ${field} info in ${tableName} table`);
         }
         await addColumn(tableName, info).then((data) => result.push(data));
-        return;
       }
     }));
   }));
