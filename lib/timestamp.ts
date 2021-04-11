@@ -16,7 +16,8 @@ function timestamp () {
   const hour = toDisgits(now.getHours());
   const minute = toDisgits(now.getMinutes());
   const second = toDisgits(now.getSeconds());
-  return `${year}${month}${hour}${minute}${second}`;
+  const mSecond = (now.getMilliseconds());
+  return `${year}${month}${hour}${minute}${second}${mSecond}`;
 }
 
 export default timestamp

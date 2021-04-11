@@ -7,10 +7,10 @@
   "private": false,
   "scripts": {
     "build": "tsc",
-    "prod:generate": "NODE_ENV=production node ./dist/scripts/generator.js",
-    "prod:migrate": "NODE_ENV=production node ./dist/scripts/runner.js",
-    "dev:generate": "ts-node-dev ./scripts/generator.ts",
-    "dev:migrate": "ts-node-dev ./scripts/runner.ts"
+    "prod:generator": "NODE_ENV=production node ./dist/scripts/generator.js",
+    "prod:runner": "NODE_ENV=production node ./dist/scripts/runner.js",
+    "dev:generator": "ts-node-dev ./scripts/generator.ts",
+    "dev:runner": "ts-node-dev ./scripts/runner.ts"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.18",
