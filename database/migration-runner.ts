@@ -1,7 +1,7 @@
 import fs from 'fs';
 import getMigrationDir from '../lib/migration-dir';
 import { DiffData } from '../types';
-import query from './query/custom-query';
+import query from './query/query';
 class MigrationRunner {
   private databaseName: string = '';
   private metaTableName: string = '';

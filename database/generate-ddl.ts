@@ -1,4 +1,4 @@
-import query from './query/custom-query';
+import query from './query/query';
 
 async function generateDDL (tablename: string): Promise<string> {
   try {

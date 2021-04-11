@@ -5,7 +5,7 @@ import { ColumnDetail, SchemaDetail, DiffData } from '../types';
 import timestamp from '../lib/timestamp';
 import getSchemaDir from '../lib/schema-dir';
 import getMigrationDir from '../lib/migration-dir';
-import query from './query/custom-query';
+import query from './query/query';
 import findDiff from '../lib/find-diff';
 
 interface StringKeyOfObject {
