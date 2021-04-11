@@ -1,6 +1,6 @@
 import db from '../db';
 
-async function customQuery (sql: string): Promise<any> {
+async function query (sql: string): Promise<any> {
   return new Promise((resolve, reject) => {
     db.query(sql, (err, rows) => {
       if (err) {
@@ -11,4 +11,4 @@ async function customQuery (sql: string): Promise<any> {
   })
 }
 
-export default customQuery
+export default query

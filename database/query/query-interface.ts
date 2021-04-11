@@ -1,5 +1,5 @@
 import { SchemaDetail, ColumnDetail, DiffData } from '../../types';
-import getDDL from './query-ddl';
+import generateDDL from '../generate-ddl';
 
 export async function dropTable (tableName: string) {
   const query = `DROP TABLE \`DATABASE-NAME\`.\`${tableName}\``;
@@ -39,7 +39,7 @@ export async function createTable (tableName: string, tableInfo: SchemaDetail): 
     targetTable: tableName,
     type: 'createTable',
     query, 
-    ddl: await getDDL(tableName)
+    ddl: await generateDDL(tableName)
   };
   return data
 }
@@ -53,7 +53,7 @@ export async function addColumn(tableName: string, column: ColumnDetail): Promis
     targetTable: tableName,
     type: 'addColumn',
     query,
-    ddl: await getDDL(tableName)
+    ddl: await generateDDL(tableName)
   };
 
   return data;
@@ -66,7 +66,7 @@ export async function removeColumn(tableName: string, columnName: string): Promi
     targetTable: tableName,
     type: 'removeColumn',
     query,
-    ddl: await getDDL(tableName),
+    ddl: await generateDDL(tableName),
   }
 
   return data;
@@ -83,7 +83,7 @@ export async function changeColumn(tableName: string, column: ColumnDetail): Pro
     targetTable: tableName,
     type: 'changeColumn',
     query,
-    ddl: await getDDL(tableName),
+    ddl: await generateDDL(tableName),
   }
 
   return data;

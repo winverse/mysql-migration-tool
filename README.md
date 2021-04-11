@@ -17,13 +17,13 @@
 
  ## 명령어(scripts)
 
-  - `dev:generator`: 개발 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
+  - `dev:generate`: 개발 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
   
-  - `dev:runner <DBName>`: 개발 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 에러가 발생합니다.
+  - `dev:run <DBName>`: 개발 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 에러가 발생합니다.
 
   - `build`: typescript compile command
-  - `prod:generator`: 프로덕트 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
-  - `prod:runner <DBName>`: 프로덕트 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 cli-prompt로 입력화면이 뜨게 됩니다.
+  - `prod:generate`: 프로덕트 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
+  - `prod:run <DBName>`: 프로덕트 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 cli-prompt로 입력화면이 뜨게 됩니다.
 
 
 -  `reset`: 삭제해도 무관한 파일들을 삭제합니다.

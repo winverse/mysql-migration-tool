@@ -1,6 +1,7 @@
 import fs from 'fs';
 import configDir from './config-dir';
 
+// database config 생성
 async function writeConfig(database: string = 'linegames') {
   const configPath = `${configDir()}/config.json`;
 

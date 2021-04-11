@@ -10,10 +10,10 @@
   },
   "scripts": {
     "build": "tsc",
-    "prod:generator": "NODE_ENV=production node ./dist/scripts/generator.js",
-    "prod:runner": "NODE_ENV=production node ./dist/scripts/runner.js",
-    "dev:generator": "ts-node ./scripts/generator.ts",
-    "dev:runner": "ts-node ./scripts/runner.ts",
+    "prod:generate": "NODE_ENV=production node ./dist/scripts/generator.js",
+    "prod:run": "NODE_ENV=production node ./dist/scripts/runner.js",
+    "dev:generate": "ts-node ./scripts/generator.ts",
+    "dev:run": "ts-node ./scripts/runner.ts",
     "reset": "rm -rf ./database/schema/*.json && rm -rf ./database/migration/*.ts && rm -rf ./dist"
   },
   "devDependencies": {

@@ -5,13 +5,12 @@ import { ColumnDetail, SchemaDetail, DiffData } from '../types';
 import timestamp from '../lib/timestamp';
 import getSchemaDir from '../lib/schema-dir';
 import getMigrationDir from '../lib/migration-dir';
-import customQuery from './query/custom-query';
+import query from './query/custom-query';
 import findDiff from '../lib/find-diff';
 
 interface StringKeyOfObject {
   [key: string]: string
 }
-
 class MigrationGenerator {
   private databaseName: string = '';
   private metaTableName: string = '';
@@ -28,7 +27,7 @@ class MigrationGenerator {
 
   private async getTableNames(): Promise<string[]> {
     try {
-      const rows = await customQuery('SHOW TABLES');
+      const rows = await query('SHOW TABLES');
       const tableNames = rows.map((row: StringKeyOfObject) => row[`Tables_in_${this.databaseName}`]);
       return tableNames;
     } catch (err) {
@@ -38,7 +37,7 @@ class MigrationGenerator {
 
   private async getTableSchema(tableName: string): Promise<SchemaDetail> {
     try { 
-      const rows: ColumnDetail[] = await customQuery(`DESC ${tableName}`);
+      const rows: ColumnDetail[] = await query(`DESC ${tableName}`);
       return { tableName, columns: rows }
     } catch (err) {
       throw new Error(err);
@@ -71,10 +70,10 @@ class MigrationGenerator {
 
   private async migrateRecord (filename: string) {
     try {
-      const query = `INSERT INTO \`${this.databaseName}\`.\`${this.metaTableName}\` 
+      const rawQuery = `INSERT INTO \`${this.databaseName}\`.\`${this.metaTableName}\` 
         (name) VALUE ('${filename}');
       `;
-      await customQuery(query); 
+      await query(rawQuery); 
     } catch (err) {
         throw new Error(err);
     }

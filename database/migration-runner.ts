@@ -1,7 +1,7 @@
 import fs from 'fs';
 import getMigrationDir from '../lib/migration-dir';
 import { DiffData } from '../types';
-import customQuery from './query/custom-query';
+import query from './query/custom-query';
 class MigrationRunner {
   private databaseName: string = '';
   private metaTableName: string = '';
@@ -22,10 +22,10 @@ class MigrationRunner {
       try {
         const uniqueFilenames = Array.from(new Set(filenames));
         await Promise.all(uniqueFilenames.map(async(filename) => {
-          const query = `INSERT INTO \`${this.databaseName}\`.\`${this.metaTableName}\` 
+          const rawQuery = `INSERT INTO \`${this.databaseName}\`.\`${this.metaTableName}\` 
             (name) VALUE ('${filename}');
           `;
-          await customQuery(query);
+          await query(rawQuery);
           console.log(`filename: '${filename}' was recored`);
         }));
       } catch (err) {
@@ -39,7 +39,7 @@ class MigrationRunner {
 
   async migrationRunner(): Promise<number> {
     const migrationDir = getMigrationDir();
-    let queries: { query: string, filename: string }[] = [];
+    let queries: { rawQuery: string, filename: string }[] = [];
 
     fs.readdirSync(migrationDir).map((file) => {
       let up;
@@ -48,14 +48,14 @@ class MigrationRunner {
       } else {
         up = require(`./migration/${file}`);
       }
-      up.map((diffContext: DiffData) => queries.push({ query: diffContext.query, filename: file }));
+      up.map((diffContext: DiffData) => queries.push({ rawQuery: diffContext.query, filename: file }));
     })
 
-    const filenames = await Promise.all(queries.map(async({ query, filename }) => {
+    const filenames = await Promise.all(queries.map(async({ rawQuery, filename }) => {
       try {
-        const alreadyRunMigation = await customQuery(`SELECT name FROM \`${this.databaseName}\`.\`${this.metaTableName}\` where name = '${filename}' LIMIT 1;`);
+        const alreadyRunMigation = await query(`SELECT name FROM \`${this.databaseName}\`.\`${this.metaTableName}\` where name = '${filename}' LIMIT 1;`);
         if (alreadyRunMigation.length <= 0) {
-          await customQuery(query.replace('DATABASE-NAME', this.databaseName));
+          await query(rawQuery.replace('DATABASE-NAME', this.databaseName));
           return filename;
         }
       } catch (err) {
