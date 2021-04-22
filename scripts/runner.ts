@@ -1,6 +1,7 @@
 import MigrationRunner from '../database/migration-runner';
 import { META_TABLE_NAME } from '../database/db';
 
+// 마이그레이션 실행
 async function runner() {
   let DATABASE_NAME: string = ''
   if (process.argv[2]) {

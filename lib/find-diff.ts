@@ -14,7 +14,7 @@ async function findDiff (last:SchemaDetail[], present:SchemaDetail[]): Promise<D
     if (!presentTablesNames.includes(tableName)) {
       await dropTable(tableName).then((data) => result.push(data));
     }
-  }))
+  }));
 
   // createTable
   await Promise.all(presentTablesNames.map(async(tableName) => {
@@ -25,9 +25,9 @@ async function findDiff (last:SchemaDetail[], present:SchemaDetail[]): Promise<D
         throw new Error('Not found table info');
       }
 
-      await createTable(tableName, tableInfo).then((data) => result.push(data));
+      await createTable(tableInfo).then((data) => result.push(data));
     }
-  }))
+  }));
   
   await Promise.all(last.map(async (lastTable) => {
     const selectedTableFromPresent = present.find((presentTable) => presentTable.tableName === lastTable.tableName);

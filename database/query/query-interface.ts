@@ -13,8 +13,9 @@ export async function dropTable (tableName: string) {
   return data;
 }
 
-export async function createTable (tableName: string, tableInfo: SchemaDetail): Promise<DiffData> {
-  let query = `CREATE TABLE IF NOT EXISTS \`DATABASE-NAME\`.\`${tableName}\` (\n`;
+export async function createTable (tableInfo: SchemaDetail): Promise<DiffData> {
+  const { tableName } = tableInfo;
+  let query = `CREATE TABLE IF NOT EXISTS \`DATABASE-NAME\`.\`${tableInfo.tableName}\` (\n`;
 
   tableInfo.columns.forEach((column) => {
     const { Field, Type, Null, Extra, Default } = column;
