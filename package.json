@@ -1,12 +1,12 @@
 {
   "name": "migration",
   "version": "0.0.1",
-  "description": "Line games assignment",
+  "description": "mysql migration tool",
   "author": "public.winverse@gmail.com",
   "license": "MIT",
   "private": false,
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=16.13.1"
   },
   "scripts": {
     "build": "tsc",

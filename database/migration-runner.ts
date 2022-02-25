@@ -29,7 +29,7 @@ class MigrationRunner {
           console.log(`filename: '${filename}' was recored`);
         }));
       } catch (err) {
-        throw new Error(err);
+        throw new Error(err as string);
       }
     } else {
       console.error('[FAIL] All migration has already been applied');
@@ -59,7 +59,7 @@ class MigrationRunner {
           return filename;
         }
       } catch (err) {
-        throw new Error(err);
+        throw new Error(err as string);
       }
     }))
 

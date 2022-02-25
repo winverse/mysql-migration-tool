@@ -18,7 +18,7 @@ async function generator () {
     if (filename) {
       fs.unlinkSync(`${filename}.json`);
     }
-    throw new Error(err);
+    throw new Error(err as string);
   }
 }
 
@@ -30,7 +30,7 @@ generator().then((isDiff) => {
   }
   process.exit();
 }).catch((err) => {
-  throw new Error(err);
+  throw new Error(err as string);
 })
 
 

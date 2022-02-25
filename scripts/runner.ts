@@ -17,7 +17,7 @@ async function runner() {
     const count = await runner.migrationRunner();
     return { dbName: DATABASE_NAME, count};
   } catch (err) {
-    throw new Error(err);
+    throw new Error(err as string);
   }
 }
 

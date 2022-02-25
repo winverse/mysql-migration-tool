@@ -31,7 +31,7 @@ class MigrationGenerator {
       const tableNames = rows.map((row: StringKeyOfObject) => row[`Tables_in_${this.databaseName}`]);
       return tableNames;
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err as string);
     }
   }
 
@@ -40,7 +40,7 @@ class MigrationGenerator {
       const rows: ColumnDetail[] = await query(`DESC ${tableName}`);
       return { tableName, columns: rows }
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err as string);
     }
   }
 
@@ -75,7 +75,7 @@ class MigrationGenerator {
       `;
       await query(rawQuery); 
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err as string);
     }
   }
 
