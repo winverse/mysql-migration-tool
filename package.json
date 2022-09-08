@@ -14,6 +14,8 @@
     "prod:run": "NODE_ENV=production node ./dist/scripts/runner.js",
     "dev:generate": "ts-node ./scripts/generator.ts",
     "dev:run": "ts-node ./scripts/runner.ts",
+    "generate": "ts-node ./scripts/generator.ts",
+    "run": "ts-node ./scripts/runner.ts",
     "reset": "rm -rf ./database/schema/*.json && rm -rf ./database/migration/*.ts && rm -rf ./dist"
   },
   "devDependencies": {

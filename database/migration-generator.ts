@@ -11,6 +11,7 @@ import findDiff from '../lib/find-diff';
 interface StringKeyOfObject {
   [key: string]: string
 }
+
 class MigrationGenerator {
   private databaseName: string = '';
   private metaTableName: string = '';

@@ -18,12 +18,10 @@
 
 ## 명령어(scripts)
 
-- `dev:generate`: 개발 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
+- `yarn generate`: DB와 테이블 정보가 포함된 migration파일들을 생성합니다.   
+  만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
 
-- `dev:run <DBName>`: 개발 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 에러가 발생합니다.
+- `yarn run <DBName>`: migration 파일에 저장된 사항들을 다른 DB에 적용합니다.   
+  만약 DBName을 입력하지 않는다면 에러가 발생합니다.
 
-- `build`: typescript compile command
-- `prod:generate`: 프로덕트 환경에서 migration파일들을 "생성" 합니다. 만약 이전과 다른 내용이 없다면 파일을 생성하지 않습니다.
-- `prod:run <DBName>`: 프로덕트 환경에서 migration 파일들을 "적용"합니다. DBName을 입력하지 않는다면 에러가 발생합니다.
-
-- `reset`: 삭제해도 무관한 파일들을 삭제합니다.
+- `yarn reset`: 삭제해도 무관한 파일들을 삭제합니다.
